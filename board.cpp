@@ -18,7 +18,7 @@ void Board::displayBoard() {
 
 bool Board::makeMove(int row, int col) {
     board.at(row).at(col) = active_player == 1 ? X : O;
-    if (checkIfWinningMove(row, col)) {
+    if (checkIfWinningBoard()) {
         return true;
     } else {
         board.at(row).at(col) = active_player == 1 ? X : O;
@@ -27,27 +27,30 @@ bool Board::makeMove(int row, int col) {
     }
 }
 
-bool Board::checkIfWinningMove(int row, int col) {
+bool Board::checkIfWinningBoard() const {
     char symbol = active_player == 1 ? X : O;
 
     // Check horizontal
-    if (board.at(row).at(0) == symbol && board.at(row).at(1) == symbol && board.at(row).at(2) == symbol) {
-        return true;
+    for (int i = 0; i < grid_size; ++i) {
+        if (board.at(i).at(0) == symbol && board.at(i).at(1) == symbol && board.at(i).at(2) == symbol) {
+            return true;
+        }
     }
 
     // Check vertical
-    if (board.at(0).at(col) == symbol && board.at(1).at(col) == symbol && board.at(2).at(col) == symbol) {
-        return true;
+    for (int i = 0; i < grid_size; ++i) {
+        if (board.at(0).at(i) == symbol && board.at(1).at(i) == symbol && board.at(2).at(i) == symbol) {
+            return true;
+        }
     }
 
     // Check left diagonal
-    if (row == col && board.at(0).at(0) == symbol && board.at(1).at(1) == symbol && board.at(2).at(2) == symbol) {
+    if (board.at(0).at(0) == symbol && board.at(1).at(1) == symbol && board.at(2).at(2) == symbol) {
         return true;
     }
 
     // Check right diagonal
-    return row == col && abs(row - col) == 2 &&
-           board.at(0).at(2) == symbol && board.at(1).at(1) == symbol && board.at(2).at(0) == symbol;
+    return board.at(0).at(2) == symbol && board.at(1).at(1) == symbol && board.at(2).at(0) == symbol;
 }
 
 bool Board::checkIfValidMove(int row, int col) {
@@ -71,4 +74,27 @@ bool Board::checkIfTieGame() {
 
     // True otherwise
     return true;
+}
+
+set<pair<int, int>> Board::getEmptySpaces() const {
+    set<pair<int, int>> empty_spaces;
+    for (int i = 0; i < board.size(); ++i) {
+        for (int j = 0; j < board.size(); ++j) {
+            if (board.at(i).at(j) == Empty) {
+                empty_spaces.insert({i, j});
+            }
+        }
+    }
+    return empty_spaces;
+}
+
+int Board::getBoardScore(const Board &game_board) const {
+    bool winning_board = checkIfWinningBoard();
+    if (winning_board && active_player == 1) {
+        return 10;
+    } else if (winning_board && active_player == 2) {
+        return -10;
+    } else {
+        return 0;
+    }
 }

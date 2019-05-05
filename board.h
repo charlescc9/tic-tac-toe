@@ -5,14 +5,7 @@
 
 using namespace std;
 
-// Constants
-
-
 class Board {
-
-private:
-    // Methods
-    bool checkIfWinningMove(int row, int col);
 
 public:
     // Constructor
@@ -23,6 +16,9 @@ public:
     int active_player;
 
     // Methods
+    int getBoardScore(const Board &game_board) const;
+    set<pair<int, int>> getEmptySpaces() const;
+    bool checkIfWinningBoard() const;
     bool checkIfValidMove(int row, int col);
     bool checkIfEmptySpace(int row, int col);
     bool makeMove(int row, int col);

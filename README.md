@@ -6,7 +6,6 @@ have draw end condition!
 
 
 ### Todo
-make X and O enum?
 use array, not vector?
 
 ### Future

@@ -13,17 +13,10 @@ pair<int, int> Player::getMoveHuman() {
     return move;
 }
 
-pair<int, int> Player::getMoveRandomAI(const vector<vector<int>> &board) {
+pair<int, int> Player::getMoveRandomAI(const Board &game_board) {
 
     // Get all empty spaces
-    set<pair<int, int>> empty_spaces;
-    for (int i = 0; i < board.size(); ++i) {
-        for (int j = 0; j < board.size(); ++j) {
-            if (board.at(i).at(j) == Empty) {
-                empty_spaces.insert({i, j});
-            }
-        }
-    }
+    set<pair<int, int>> empty_spaces = game_board.getEmptySpaces();
 
     // Randomly select an empty space
     random_device device;
@@ -34,11 +27,22 @@ pair<int, int> Player::getMoveRandomAI(const vector<vector<int>> &board) {
     return *iterator;
 }
 
-pair<int, int> Player::getMoveSmartAI(int symbol, const vector<vector<int>> &board) {
-    return {};
+pair<int, int> Player::getMoveSmartAI(int symbol, const Board &game_board) {
+
+    // Get all empty spaces
+    set<pair<int, int>> empty_spaces = game_board.getEmptySpaces();
+
+    int best_score;
+    if (symbol == X) {
+        best_score = numeric_limits<int>::max();
+        for (int i = 0; i < empty_spaces.size(); ++i) {
+        }
+    } else {
+        best_score = numeric_limits<int>::min();
+    }
 }
 
-pair<int, int> Player::getMove(int symbol, const vector<vector<int>> &board) {
+pair<int, int> Player::getMove(int symbol, const Board &game_board) {
 
     pair<int, int> move;
 
@@ -47,10 +51,10 @@ pair<int, int> Player::getMove(int symbol, const vector<vector<int>> &board) {
             move = getMoveHuman();
             break;
         case RandomAI:
-            move = getMoveRandomAI(board);
+            move = getMoveRandomAI(game_board);
             break;
         case SmartAI:
-            move = getMoveSmartAI(symbol, board);
+            move = getMoveSmartAI(symbol, game_board);
             break;
         default:
             move.first = -1;
@@ -59,3 +63,4 @@ pair<int, int> Player::getMove(int symbol, const vector<vector<int>> &board) {
 
     return move;
 }
+
