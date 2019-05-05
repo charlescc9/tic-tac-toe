@@ -1,4 +1,4 @@
-# tick-tack-toe
+# tic-tac-toe
 
 
 print board at beginning

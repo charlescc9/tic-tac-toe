@@ -1,5 +1,5 @@
-#ifndef TICKTACKTOE_BOARD_H
-#define TICKTACKTOE_BOARD_H
+#ifndef TICTACTOE_BOARD_H
+#define TICTACTOE_BOARD_H
 
 #include "common.h"
 
@@ -31,4 +31,4 @@ public:
 };
 
 
-#endif //TICKTACKTOE_BOARD_H
+#endif //TICTACTOE_BOARD_H

@@ -1,5 +1,5 @@
-#ifndef TICKTACKTOE_COMMON_H
-#define TICKTACKTOE_COMMON_H
+#ifndef TICTACTOE_COMMON_H
+#define TICTACTOE_COMMON_H
 
 #include <iostream>
 #include <vector>
@@ -14,4 +14,4 @@ const char SymbolString[] = {'-', 'X', 'O'};
 enum Symbols{Empty, X, O};
 enum PlayerTypes{Human, RandomAI, SmartAI};
 
-#endif //TICKTACKTOE_COMMON_H
+#endif //TICTACTOE_COMMON_H

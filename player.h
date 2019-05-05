@@ -1,5 +1,5 @@
-#ifndef TICKTACKTOE_PLAYER_H
-#define TICKTACKTOE_PLAYER_H
+#ifndef TICTACTOE_PLAYER_H
+#define TICTACTOE_PLAYER_H
 
 #include "common.h"
 
@@ -25,4 +25,4 @@ public:
 };
 
 
-#endif //TICKTACKTOE_PLAYER_H
+#endif //TICTACTOE_PLAYER_H

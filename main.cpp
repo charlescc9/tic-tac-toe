@@ -8,7 +8,7 @@ int main(int argc, char** argv) {
 
     // Parse player type arguments
     if (argc < 3) {
-        cout << "\ntick-tack-toe takes two command line arguments for Player 1 type and Player 2 type:" << endl;
+        cout << "\ntic-tac-toe takes two command line arguments for Player 1 type and Player 2 type:" << endl;
         cout << "0: Human" << endl << "1: Random AI" << endl << "2: Smart AI" << endl;
         return 1;
     } else {
@@ -16,7 +16,7 @@ int main(int argc, char** argv) {
         bool valid_player2_type = !strcmp(argv[2], "0") || !strcmp(argv[2], "1") || !strcmp(argv[2], "2");
         if (!valid_player1_type || !valid_player2_type) {
             cout << "\nInvalid command line arguments" << endl;
-            cout << "tick-tack-toe takes two command line arguments for Player 1 type and Player 2 type:" << endl;
+            cout << "tic-tac-toe takes two command line arguments for Player 1 type and Player 2 type:" << endl;
             cout << "0: Human" << endl << "1: Random AI" << endl << "2: Smart AI" << endl;
             return 1;
         }
