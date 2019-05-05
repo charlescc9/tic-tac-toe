@@ -27,7 +27,7 @@ bool Board::makeMove(int row, int col) {
     }
 }
 
-bool Board::checkIfWinningBoard() const {
+bool Board::checkIfWinningBoard() {
     char symbol = active_player == 1 ? X : O;
 
     // Check horizontal
@@ -74,27 +74,4 @@ bool Board::checkIfTieGame() {
 
     // True otherwise
     return true;
-}
-
-vector<pair<int, int>> Board::getEmptySpaces() const {
-    vector<pair<int, int>> empty_spaces;
-    for (int i = 0; i < board.size(); ++i) {
-        for (int j = 0; j < board.size(); ++j) {
-            if (board.at(i).at(j) == Empty) {
-                empty_spaces.push_back({i, j});
-            }
-        }
-    }
-    return empty_spaces;
-}
-
-int Board::getBoardScore() const {
-    bool winning_board = checkIfWinningBoard();
-    if (winning_board && active_player == 1) {
-        return 10;
-    } else if (winning_board && active_player == 2) {
-        return -10;
-    } else {
-        return 0;
-    }
 }

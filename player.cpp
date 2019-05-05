@@ -6,6 +6,18 @@ Player::Player(int t) {
     player_type = t;
 }
 
+vector<pair<int, int>> Player::getEmptySpaces(const vector<vector<int>> &board) {
+    vector<pair<int, int>> empty_spaces;
+    for (int i = 0; i < board.size(); ++i) {
+        for (int j = 0; j < board.size(); ++j) {
+            if (board.at(i).at(j) == Empty) {
+                empty_spaces.emplace_back(i, j);
+            }
+        }
+    }
+    return empty_spaces;
+}
+
 pair<int, int> Player::getMoveHuman() {
     pair<int, int> move;
     cout << "Please enter a 0-indexed row and column separated by a space" << endl;
@@ -13,10 +25,10 @@ pair<int, int> Player::getMoveHuman() {
     return move;
 }
 
-pair<int, int> Player::getMoveRandomAI(const Board &game_board) {
+pair<int, int> Player::getMoveRandomAI(const vector<vector<int>> &board) {
 
     // Get all empty spaces
-    vector<pair<int, int>> empty_spaces = game_board.getEmptySpaces();
+    vector<pair<int, int>> empty_spaces = getEmptySpaces(board);
 
     // Randomly select an empty space
     random_device device;
@@ -27,41 +39,36 @@ pair<int, int> Player::getMoveRandomAI(const Board &game_board) {
     return *iterator;
 }
 
-int Player::miniMax(const Board &game_board) {
-    return 0;
-}
-
-pair<int, int> Player::getMoveSmartAI(int symbol, const Board &game_board) {
+pair<int, int> Player::getMoveSmartAI(const vector<vector<int>> &board) {
 
     // Get all empty spaces
-    vector<pair<int, int>> empty_spaces = game_board.getEmptySpaces();
+    vector<pair<int, int>> empty_spaces = getEmptySpaces(board);
 
-    int best_score;
-    if (symbol == X) {
-        best_score = numeric_limits<int>::max();
-        for (auto & empty_space : empty_spaces) {
-
-            // Copy game board
-            Board game_board_copy;
-            game_board_copy.board = game_board.board;
-            game_board_copy.active_player = game_board.active_player;
-
-            // Move
-            game_board_copy.makeMove(empty_space.first, empty_space.second);
-
-            // Score
-            int score = game_board_copy.getBoardScore();
-            if (score != 0) {
-                return empty_space;
-            }
-            int foo = 123;
-        }
-    } else {
-        best_score = numeric_limits<int>::min();
+    // Last move
+    if (empty_spaces.size() == 1) {
+        return empty_spaces.at(0);
     }
+
+    // Move to center first
+    if (empty_spaces.size() == 9) {
+        return {1, 1};
+    }
+
+    // Try to get corner
+    for (auto space : empty_spaces) {
+        if ((space.first == 0 && space.second == 0) ||
+            (space.first == 0 && space.second == 2) ||
+            (space.first == 2 && space.second == 0) ||
+            (space.first == 2 && space.second == 2)) {
+            return space;
+        }
+    }
+
+    // Otherwise, just pick first edge
+    return empty_spaces.at(0);
 }
 
-pair<int, int> Player::getMove(int symbol, const Board &game_board) {
+pair<int, int> Player::getMove(const vector<vector<int>> &board) {
 
     pair<int, int> move;
 
@@ -70,10 +77,10 @@ pair<int, int> Player::getMove(int symbol, const Board &game_board) {
             move = getMoveHuman();
             break;
         case RandomAI:
-            move = getMoveRandomAI(game_board);
+            move = getMoveRandomAI(board);
             break;
         case SmartAI:
-            move = getMoveSmartAI(symbol, game_board);
+            move = getMoveSmartAI(board);
             break;
         default:
             move.first = -1;

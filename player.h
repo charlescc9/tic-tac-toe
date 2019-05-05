@@ -2,7 +2,6 @@
 #define TICTACTOE_PLAYER_H
 
 #include "common.h"
-#include "board.h"
 
 using namespace std;
 
@@ -13,17 +12,17 @@ private:
     int player_type;
 
     // Methods
+    vector<pair<int, int>> getEmptySpaces(const vector<vector<int>> &board);
     pair<int, int> getMoveHuman();
-    pair<int, int> getMoveRandomAI(const Board &game_board);
-    int miniMax(const Board &game_board);
-    pair<int, int> getMoveSmartAI(int symbol, const Board &game_board);
+    pair<int, int> getMoveRandomAI(const vector<vector<int>> &board);
+    pair<int, int> getMoveSmartAI(const vector<vector<int>> &board);
 
 public:
     // Constructor
     explicit Player(int t);
 
     // Method
-    pair<int, int> getMove(int symbol, const Board &game_board);
+    pair<int, int> getMove(const vector<vector<int>> &board);
 };
 
 
