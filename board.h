@@ -16,8 +16,8 @@ public:
     int active_player;
 
     // Methods
-    int getBoardScore(const Board &game_board) const;
-    set<pair<int, int>> getEmptySpaces() const;
+    int getBoardScore() const;
+    vector<pair<int, int>> getEmptySpaces() const;
     bool checkIfWinningBoard() const;
     bool checkIfValidMove(int row, int col);
     bool checkIfEmptySpace(int row, int col);

@@ -16,7 +16,7 @@ pair<int, int> Player::getMoveHuman() {
 pair<int, int> Player::getMoveRandomAI(const Board &game_board) {
 
     // Get all empty spaces
-    set<pair<int, int>> empty_spaces = game_board.getEmptySpaces();
+    vector<pair<int, int>> empty_spaces = game_board.getEmptySpaces();
 
     // Randomly select an empty space
     random_device device;
@@ -27,15 +27,34 @@ pair<int, int> Player::getMoveRandomAI(const Board &game_board) {
     return *iterator;
 }
 
+int Player::miniMax(const Board &game_board) {
+    return 0;
+}
+
 pair<int, int> Player::getMoveSmartAI(int symbol, const Board &game_board) {
 
     // Get all empty spaces
-    set<pair<int, int>> empty_spaces = game_board.getEmptySpaces();
+    vector<pair<int, int>> empty_spaces = game_board.getEmptySpaces();
 
     int best_score;
     if (symbol == X) {
         best_score = numeric_limits<int>::max();
-        for (int i = 0; i < empty_spaces.size(); ++i) {
+        for (auto & empty_space : empty_spaces) {
+
+            // Copy game board
+            Board game_board_copy;
+            game_board_copy.board = game_board.board;
+            game_board_copy.active_player = game_board.active_player;
+
+            // Move
+            game_board_copy.makeMove(empty_space.first, empty_space.second);
+
+            // Score
+            int score = game_board_copy.getBoardScore();
+            if (score != 0) {
+                return empty_space;
+            }
+            int foo = 123;
         }
     } else {
         best_score = numeric_limits<int>::min();

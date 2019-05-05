@@ -76,19 +76,19 @@ bool Board::checkIfTieGame() {
     return true;
 }
 
-set<pair<int, int>> Board::getEmptySpaces() const {
-    set<pair<int, int>> empty_spaces;
+vector<pair<int, int>> Board::getEmptySpaces() const {
+    vector<pair<int, int>> empty_spaces;
     for (int i = 0; i < board.size(); ++i) {
         for (int j = 0; j < board.size(); ++j) {
             if (board.at(i).at(j) == Empty) {
-                empty_spaces.insert({i, j});
+                empty_spaces.push_back({i, j});
             }
         }
     }
     return empty_spaces;
 }
 
-int Board::getBoardScore(const Board &game_board) const {
+int Board::getBoardScore() const {
     bool winning_board = checkIfWinningBoard();
     if (winning_board && active_player == 1) {
         return 10;

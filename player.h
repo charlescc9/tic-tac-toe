@@ -13,9 +13,10 @@ private:
     int player_type;
 
     // Methods
-    static pair<int, int> getMoveHuman();
-    static pair<int, int> getMoveRandomAI(const Board &game_board);
-    static pair<int, int> getMoveSmartAI(int symbol, const Board &game_board);
+    pair<int, int> getMoveHuman();
+    pair<int, int> getMoveRandomAI(const Board &game_board);
+    int miniMax(const Board &game_board);
+    pair<int, int> getMoveSmartAI(int symbol, const Board &game_board);
 
 public:
     // Constructor
