@@ -53,10 +53,6 @@ bool Board::checkIfWinningBoard() {
     return board.at(0).at(2) == symbol && board.at(1).at(1) == symbol && board.at(2).at(0) == symbol;
 }
 
-bool Board::checkIfValidMove(int row, int col) {
-    return row >= 0 && row < grid_size && col >= 0 && col < grid_size;
-}
-
 bool Board::checkIfEmptySpace(int row, int col) {
     return board.at(row).at(col) == Empty;
 }

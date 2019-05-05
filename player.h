@@ -12,17 +12,20 @@ private:
     int player_type;
 
     // Methods
-    vector<pair<int, int>> getEmptySpaces(const vector<vector<int>> &board);
-    pair<int, int> getMoveHuman();
-    pair<int, int> getMoveRandomAI(const vector<vector<int>> &board);
-    pair<int, int> getMoveSmartAI(const vector<vector<int>> &board);
+    static bool checkHorizontal(int row, int col, int symbol, const vector<vector<int>> &board);
+    static bool checkVertical(int row, int col, int symbol, const vector<vector<int>> &board);
+    static bool checkDiagonal(int row, int col, int symbol, const vector<vector<int>> &board);
+    static vector<pair<int, int>> getEmptySpaces(const vector<vector<int>> &board);
+    static pair<int, int> getMoveHuman();
+    static pair<int, int> getMoveRandomAI(const vector<vector<int>> &board);
+    static pair<int, int> getMoveSmartAI(int player, const vector<vector<int>> &board);
 
 public:
     // Constructor
     explicit Player(int t);
 
     // Method
-    pair<int, int> getMove(const vector<vector<int>> &board);
+    pair<int, int> getMove(int symbol, const vector<vector<int>> &board);
 };
 
 

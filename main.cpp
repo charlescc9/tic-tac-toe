@@ -37,14 +37,14 @@ int main(int argc, char** argv) {
         // Get player move
         if (game_board.active_player == 1) {
             cout << "\nPlayer 1: " << endl;
-            move = player1.getMove(game_board.board);
+            move = player1.getMove(X, game_board.board);
         } else {
             cout << "\nPlayer 2: " << endl;
-            move = player2.getMove(game_board.board);
+            move = player2.getMove(O, game_board.board);
         }
 
         // Check if move is valid
-        if (!game_board.checkIfValidMove(move.first, move.second)) {
+        if (move.first < 0 || move.first >= grid_size || move.second < 0 || move.second >= grid_size) {
             cout << "Row and Column must be between 0 and 2" << endl;
         } else if (!game_board.checkIfEmptySpace(move.first, move.second)) {
             cout << "Space already occupied" << endl;

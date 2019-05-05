@@ -7,6 +7,10 @@ using namespace std;
 
 class Board {
 
+private:
+    // Methods
+    bool checkIfWinningBoard();
+
 public:
     // Constructor
     Board();
@@ -15,9 +19,6 @@ public:
     vector<vector<int>> board;
     int active_player;
 
-    // Methods
-    bool checkIfWinningBoard();
-    bool checkIfValidMove(int row, int col);
     bool checkIfEmptySpace(int row, int col);
     bool makeMove(int row, int col);
     bool checkIfTieGame();

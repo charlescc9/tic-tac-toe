@@ -6,6 +6,43 @@ Player::Player(int t) {
     player_type = t;
 }
 
+bool Player::checkHorizontal(int row, int col, int symbol, const vector<vector<int>> &board) {
+    if (col == 0) {
+        return board.at(row).at(1) == symbol && board.at(row).at(2) == symbol;
+    } else if (col == 1) {
+        return board.at(row).at(0) == symbol && board.at(row).at(2) == symbol;
+    } else {
+        return board.at(row).at(0) == symbol && board.at(row).at(1) == symbol;
+    }
+}
+
+bool Player::checkVertical(int row, int col, int symbol, const vector<vector<int>> &board) {
+    if (row == 0) {
+        return board.at(1).at(col) == symbol && board.at(2).at(col) == symbol;
+    } else if (row == 1) {
+        return board.at(0).at(col) == symbol && board.at(2).at(col) == symbol;
+    } else {
+        return board.at(0).at(col) == symbol && board.at(1).at(col) == symbol;
+    }
+}
+
+bool Player::checkDiagonal(int row, int col, int symbol, const vector<vector<int>> &board) {
+    if (abs(row - col) == 1) {
+        return false;
+    } else if (row == 0 && col == 0) {
+        return board.at(1).at(1) == symbol && board.at(2).at(2) == symbol;
+    } else if (row == 0 && col == 2) {
+        return board.at(1).at(1) == symbol && board.at(2).at(0) == symbol;
+    } else if (row == 1 && col == 1) {
+        return (board.at(0).at(0) == symbol && board.at(0).at(0) == symbol) ||
+               (board.at(0).at(2) == symbol && board.at(2).at(0) == symbol);
+    } else if (row == 2 && col == 0) {
+        return board.at(0).at(2) == symbol && board.at(1).at(1) == symbol;
+    } else {
+        return board.at(0).at(0) == symbol && board.at(1).at(1) == symbol;
+    }
+}
+
 vector<pair<int, int>> Player::getEmptySpaces(const vector<vector<int>> &board) {
     vector<pair<int, int>> empty_spaces;
     for (int i = 0; i < board.size(); ++i) {
@@ -39,19 +76,38 @@ pair<int, int> Player::getMoveRandomAI(const vector<vector<int>> &board) {
     return *iterator;
 }
 
-pair<int, int> Player::getMoveSmartAI(const vector<vector<int>> &board) {
-
-    // Get all empty spaces
+pair<int, int> Player::getMoveSmartAI(int player, const vector<vector<int>> &board) {
     vector<pair<int, int>> empty_spaces = getEmptySpaces(board);
+    int opponent = player == X ? O : X;
 
     // Last move
     if (empty_spaces.size() == 1) {
         return empty_spaces.at(0);
     }
 
+    // Win if possible
+    for (auto space : empty_spaces) {
+        if (checkHorizontal(space.first, space.second, player, board) ||
+            checkVertical(space.first, space.second, player, board) ||
+            checkDiagonal(space.first, space.second, player, board)) {
+            return space;
+        }
+    }
+
+    // Block opponent if about to win
+    for (auto space : empty_spaces) {
+        if (checkHorizontal(space.first, space.second, opponent, board) ||
+                checkVertical(space.first, space.second, opponent, board) ||
+                checkDiagonal(space.first, space.second, opponent, board)) {
+            return space;
+        }
+    }
+
     // Move to center first
-    if (empty_spaces.size() == 9) {
-        return {1, 1};
+    for (auto space : empty_spaces) {
+        if (space.first == 1 && space.second == 1) {
+            return space;
+        }
     }
 
     // Try to get corner
@@ -68,7 +124,7 @@ pair<int, int> Player::getMoveSmartAI(const vector<vector<int>> &board) {
     return empty_spaces.at(0);
 }
 
-pair<int, int> Player::getMove(const vector<vector<int>> &board) {
+pair<int, int> Player::getMove(int symbol, const vector<vector<int>> &board) {
 
     pair<int, int> move;
 
@@ -80,7 +136,7 @@ pair<int, int> Player::getMove(const vector<vector<int>> &board) {
             move = getMoveRandomAI(board);
             break;
         case SmartAI:
-            move = getMoveSmartAI(board);
+            move = getMoveSmartAI(symbol, board);
             break;
         default:
             move.first = -1;
@@ -89,4 +145,3 @@ pair<int, int> Player::getMove(const vector<vector<int>> &board) {
 
     return move;
 }
-
