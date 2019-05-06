@@ -6,48 +6,47 @@ Player::Player(int t) {
     player_type = t;
 }
 
-bool Player::checkHorizontal(int row, int col, int symbol, const vector<vector<int>> &board) {
+bool Player::checkHorizontal(int row, int col, int symbol, int board[grid_size][grid_size]) {
     if (col == 0) {
-        return board.at(row).at(1) == symbol && board.at(row).at(2) == symbol;
+        return board[row][1] == symbol && board[row][2] == symbol;
     } else if (col == 1) {
-        return board.at(row).at(0) == symbol && board.at(row).at(2) == symbol;
+        return board[row][0] == symbol && board[row][2] == symbol;
     } else {
-        return board.at(row).at(0) == symbol && board.at(row).at(1) == symbol;
+        return board[row][0] == symbol && board[row][1] == symbol;
     }
 }
 
-bool Player::checkVertical(int row, int col, int symbol, const vector<vector<int>> &board) {
+bool Player::checkVertical(int row, int col, int symbol, int board[grid_size][grid_size]) {
     if (row == 0) {
-        return board.at(1).at(col) == symbol && board.at(2).at(col) == symbol;
+        return board[1][col] == symbol && board[2][col] == symbol;
     } else if (row == 1) {
-        return board.at(0).at(col) == symbol && board.at(2).at(col) == symbol;
+        return board[0][col] == symbol && board[2][col] == symbol;
     } else {
-        return board.at(0).at(col) == symbol && board.at(1).at(col) == symbol;
+        return board[0][col] == symbol && board[1][col] == symbol;
     }
 }
 
-bool Player::checkDiagonal(int row, int col, int symbol, const vector<vector<int>> &board) {
+bool Player::checkDiagonal(int row, int col, int symbol, int board[grid_size][grid_size]) {
     if (abs(row - col) == 1) {
         return false;
     } else if (row == 0 && col == 0) {
-        return board.at(1).at(1) == symbol && board.at(2).at(2) == symbol;
+        return board[1][1] == symbol && board[2][2] == symbol;
     } else if (row == 0 && col == 2) {
-        return board.at(1).at(1) == symbol && board.at(2).at(0) == symbol;
+        return board[1][1] == symbol && board[2][0] == symbol;
     } else if (row == 1 && col == 1) {
-        return (board.at(0).at(0) == symbol && board.at(0).at(0) == symbol) ||
-               (board.at(0).at(2) == symbol && board.at(2).at(0) == symbol);
+        return (board[0][0] == symbol && board[2][2] == symbol) || (board[0][2] == symbol && board[2][0] == symbol);
     } else if (row == 2 && col == 0) {
-        return board.at(0).at(2) == symbol && board.at(1).at(1) == symbol;
+        return board[0][2] == symbol && board[1][1] == symbol;
     } else {
-        return board.at(0).at(0) == symbol && board.at(1).at(1) == symbol;
+        return board[0][0] == symbol && board[1][1] == symbol;
     }
 }
 
-vector<pair<int, int>> Player::getEmptySpaces(const vector<vector<int>> &board) {
+vector<pair<int, int>> Player::getEmptySpaces(int board[grid_size][grid_size]) {
     vector<pair<int, int>> empty_spaces;
-    for (int i = 0; i < board.size(); ++i) {
-        for (int j = 0; j < board.size(); ++j) {
-            if (board.at(i).at(j) == Empty) {
+    for (int i = 0; i < grid_size; ++i) {
+        for (int j = 0; j < grid_size; ++j) {
+            if (board[i][j] == Empty) {
                 empty_spaces.emplace_back(i, j);
             }
         }
@@ -57,12 +56,29 @@ vector<pair<int, int>> Player::getEmptySpaces(const vector<vector<int>> &board) 
 
 pair<int, int> Player::getMoveHuman() {
     pair<int, int> move;
-    cout << "Please enter a 0-indexed row and column separated by a space" << endl;
-    cin >> move.first >> move.second;
+    string input, row, col;
+    bool invalid = true;
+    cout << "Please enter a 0-indexed row and column separated by a comma" << endl;
+
+    while (invalid) {
+        cin >> input;
+        int comma = input.find(',');
+        row = input.substr(0, comma);
+        col = input.substr(comma + 1, input.size());
+        if (row.size() != 1 || col.size() != 1 || !isdigit(row.at(0)) || ! isdigit(col.at(0))) {
+            cout << "Invalid input, please try again" << endl;
+            cin.clear();
+        } else {
+            move.first = stoi(row);
+            move.second = stoi(col);
+            invalid = false;
+        }
+    }
+
     return move;
 }
 
-pair<int, int> Player::getMoveRandomAI(const vector<vector<int>> &board) {
+pair<int, int> Player::getMoveRandomAI(int board[grid_size][grid_size]) {
 
     // Get all empty spaces
     vector<pair<int, int>> empty_spaces = getEmptySpaces(board);
@@ -76,7 +92,7 @@ pair<int, int> Player::getMoveRandomAI(const vector<vector<int>> &board) {
     return *iterator;
 }
 
-pair<int, int> Player::getMoveSmartAI(int player, const vector<vector<int>> &board) {
+pair<int, int> Player::getMoveSmartAI(int player, int board[grid_size][grid_size]) {
     vector<pair<int, int>> empty_spaces = getEmptySpaces(board);
     int opponent = player == X ? O : X;
 
@@ -124,7 +140,7 @@ pair<int, int> Player::getMoveSmartAI(int player, const vector<vector<int>> &boa
     return empty_spaces.at(0);
 }
 
-pair<int, int> Player::getMove(int symbol, const vector<vector<int>> &board) {
+pair<int, int> Player::getMove(int symbol, int board[grid_size][grid_size]) {
 
     pair<int, int> move;
 

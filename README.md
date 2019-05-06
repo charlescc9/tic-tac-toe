@@ -5,9 +5,6 @@ print board at beginning
 have draw end condition!
 
 
-### Todo
-use array, not vector?
-
 ### Future
 analytics
 more intelligent AI

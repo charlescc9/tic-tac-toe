@@ -16,7 +16,7 @@ public:
     Board();
 
     // Variable
-    vector<vector<int>> board;
+    int board[grid_size][grid_size];
     int active_player;
 
     bool checkIfEmptySpace(int row, int col);
