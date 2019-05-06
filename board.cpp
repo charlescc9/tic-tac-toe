@@ -72,4 +72,5 @@ void Board::displayBoard() {
              << SymbolString[board[i][1]] << " | "
              << SymbolString[board[i][2]] << endl;
     }
+    cout << endl;
 }

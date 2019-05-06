@@ -69,7 +69,7 @@ pair<int, int> Player::getMoveHuman() {
         row = input.substr(0, comma);
         col = input.substr(comma + 1, input.size());
         if (row.size() != 1 || col.size() != 1 || comma == -1 || !isdigit(row.at(0)) || ! isdigit(col.at(0))) {
-            cout << "Invalid input, please try again" << endl;
+            cout << "Error: invalid input, please try again" << endl;
             cin.clear();
         } else {
             move.first = stoi(row);
@@ -160,7 +160,7 @@ pair<int, int> Player::getMove(int symbol, int board[grid_size][grid_size]) {
             move = getMoveSmartAI(symbol, board);
             break;
         default:
-            cout << "Invalid player type" << endl;
+            cout << "Error: Invalid player type" << endl;
     }
 
     return move;

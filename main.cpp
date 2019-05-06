@@ -6,14 +6,14 @@ int main(int argc, char** argv) {
 
     // Parse command line arguments
     if (argc < 3) {
-        cout << "\ntic-tac-toe takes two command line arguments for Player 1 type and Player 2 type:" << endl;
+        cout << "tic-tac-toe takes two command line arguments for Player 1 type and Player 2 type:" << endl;
         cout << "0: Human" << endl << "1: Random AI" << endl << "2: Smart AI" << endl;
         return 1;
     } else {
         bool valid_player1_type = !strcmp(argv[1], "0") || !strcmp(argv[1], "1") || !strcmp(argv[1], "2");
         bool valid_player2_type = !strcmp(argv[2], "0") || !strcmp(argv[2], "1") || !strcmp(argv[2], "2");
         if (!valid_player1_type || !valid_player2_type) {
-            cout << "\nInvalid command line arguments" << endl;
+            cout << "Error: Invalid command line arguments" << endl;
             cout << "tic-tac-toe takes two command line arguments for Player 1 type and Player 2 type:" << endl;
             cout << "0: Human" << endl << "1: Random AI" << endl << "2: Smart AI" << endl;
             return 1;
@@ -33,18 +33,18 @@ int main(int argc, char** argv) {
 
         // Get player move
         if (game_board.active_player == 1) {
-            cout << "\nPlayer 1: " << endl;
+            cout << "Player 1: " << endl;
             move = player1.getMove(X, game_board.board);
         } else {
-            cout << "\nPlayer 2: " << endl;
+            cout << "Player 2: " << endl;
             move = player2.getMove(O, game_board.board);
         }
 
         // Check if move is valid
         if (move.first < 0 || move.first >= grid_size || move.second < 0 || move.second >= grid_size) {
-            cout << "Row and Column must be between 0 and 2" << endl;
+            cout << "Error: row and Column must be between 0 and 2" << endl;
         } else if (!game_board.checkIfEmptySpace(move.first, move.second)) {
-            cout << "Space already occupied" << endl;
+            cout << "Error: space already occupied" << endl;
         } else {
 
             // Perform and display move
@@ -54,14 +54,14 @@ int main(int argc, char** argv) {
             // Check if player won
             bool is_winning_move = game_board.checkIfWinningBoard();
             if (is_winning_move) {
-                cout << "\nPlayer " << (game_board.active_player == 1 ? "1 " : "2 ") << "won the game!" << endl;
+                cout << "Player " << (game_board.active_player == 1 ? "1 " : "2 ") << "won the game!" << endl;
                 break;
             }
 
             // Check if tie game
             bool is_tie_game = game_board.checkIfTieGame();
             if (is_tie_game) {
-                cout << "\nTie game..." << endl;
+                cout << "Tie game..." << endl;
                 break;
             }
 
