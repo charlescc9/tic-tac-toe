@@ -52,15 +52,13 @@ int main(int argc, char** argv) {
             game_board.displayBoard();
 
             // Check if player won
-            bool is_winning_move = game_board.checkIfWinningBoard();
-            if (is_winning_move) {
+            if (game_board.checkIfWinningBoard()) {
                 cout << "Player " << (game_board.active_player == 1 ? "1 " : "2 ") << "won the game!" << endl;
                 break;
             }
 
             // Check if tie game
-            bool is_tie_game = game_board.checkIfTieGame();
-            if (is_tie_game) {
+            if (game_board.checkIfTieGame()) {
                 cout << "Tie game..." << endl;
                 break;
             }

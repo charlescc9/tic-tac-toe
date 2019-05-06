@@ -6,7 +6,7 @@
 class Player {
 
 private:
-    // Variables
+    // Variable
     int player_type;
 
     // Methods

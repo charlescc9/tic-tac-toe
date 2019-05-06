@@ -118,8 +118,8 @@ pair<int, int> Player::getMoveSmartAI(int player, int board[grid_size][grid_size
     // Block opponent if about to win
     for (auto space : empty_spaces) {
         if (checkHorizontal(space.first, space.second, opponent, board) ||
-                checkVertical(space.first, space.second, opponent, board) ||
-                checkDiagonal(space.first, space.second, opponent, board)) {
+            checkVertical(space.first, space.second, opponent, board) ||
+            checkDiagonal(space.first, space.second, opponent, board)) {
             return space;
         }
     }
