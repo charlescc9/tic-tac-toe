@@ -33,10 +33,10 @@ int main(int argc, char** argv) {
 
         // Get player move
         if (game_board.active_player == 1) {
-            cout << "Player 1: " << endl;
+            cout << "Player 1 (X): " << endl;
             move = player1.getMove(X, game_board.board);
         } else {
-            cout << "Player 2: " << endl;
+            cout << "Player 2 (O): " << endl;
             move = player2.getMove(O, game_board.board);
         }
 
