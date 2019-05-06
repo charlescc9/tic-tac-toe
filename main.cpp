@@ -1,12 +1,10 @@
-#include <iostream>
+#include "common.h"
 #include "board.h"
 #include "player.h"
 
-using namespace std;
-
 int main(int argc, char** argv) {
 
-    // Parse player type arguments
+    // Parse command line arguments
     if (argc < 3) {
         cout << "\ntic-tac-toe takes two command line arguments for Player 1 type and Player 2 type:" << endl;
         cout << "0: Human" << endl << "1: Random AI" << endl << "2: Smart AI" << endl;
@@ -29,9 +27,8 @@ int main(int argc, char** argv) {
     Player player1(player1_type);
     Player player2(player2_type);
 
-    // Get player moves until game ends
+    // Main game loop
     pair<int, int> move;
-    game_board.displayBoard();
     while (true) {
 
         // Get player move
@@ -50,11 +47,14 @@ int main(int argc, char** argv) {
             cout << "Space already occupied" << endl;
         } else {
 
-            // Perform move and check if player won
-            bool is_winning_move = game_board.makeMove(move.first, move.second);
+            // Perform and display move
+            game_board.makeMove(move.first, move.second);
+            game_board.displayBoard();
+
+            // Check if player won
+            bool is_winning_move = game_board.checkIfWinningBoard();
             if (is_winning_move) {
                 cout << "\nPlayer " << (game_board.active_player == 1 ? "1 " : "2 ") << "won the game!" << endl;
-                game_board.displayBoard();
                 break;
             }
 
@@ -62,13 +62,12 @@ int main(int argc, char** argv) {
             bool is_tie_game = game_board.checkIfTieGame();
             if (is_tie_game) {
                 cout << "\nTie game..." << endl;
-                game_board.displayBoard();
                 break;
             }
-        }
 
-        // Display board on CLI
-        game_board.displayBoard();
+            // Switch player
+            game_board.switchActivePlayer();
+        }
     }
 
     return 0;

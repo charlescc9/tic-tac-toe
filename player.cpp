@@ -1,7 +1,5 @@
 #include "player.h"
 
-using namespace std;
-
 Player::Player(int t) {
     player_type = t;
 }
@@ -57,15 +55,20 @@ vector<pair<int, int>> Player::getEmptySpaces(int board[grid_size][grid_size]) {
 pair<int, int> Player::getMoveHuman() {
     pair<int, int> move;
     string input, row, col;
-    bool invalid = true;
-    cout << "Please enter a 0-indexed row and column separated by a comma" << endl;
 
+    // Loop while invalid input
+    bool invalid = true;
     while (invalid) {
+
+        // Get user input
+        cout << "Please enter a 0-indexed row and column separated by a comma" << endl;
         cin >> input;
+
+        // Check if valid
         int comma = input.find(',');
         row = input.substr(0, comma);
         col = input.substr(comma + 1, input.size());
-        if (row.size() != 1 || col.size() != 1 || !isdigit(row.at(0)) || ! isdigit(col.at(0))) {
+        if (row.size() != 1 || col.size() != 1 || comma == -1 || !isdigit(row.at(0)) || ! isdigit(col.at(0))) {
             cout << "Invalid input, please try again" << endl;
             cin.clear();
         } else {
@@ -93,8 +96,10 @@ pair<int, int> Player::getMoveRandomAI(int board[grid_size][grid_size]) {
 }
 
 pair<int, int> Player::getMoveSmartAI(int player, int board[grid_size][grid_size]) {
-    vector<pair<int, int>> empty_spaces = getEmptySpaces(board);
     int opponent = player == X ? O : X;
+
+    // Get all empty spaces
+    vector<pair<int, int>> empty_spaces = getEmptySpaces(board);
 
     // Last move
     if (empty_spaces.size() == 1) {
@@ -141,9 +146,9 @@ pair<int, int> Player::getMoveSmartAI(int player, int board[grid_size][grid_size
 }
 
 pair<int, int> Player::getMove(int symbol, int board[grid_size][grid_size]) {
-
     pair<int, int> move;
 
+    // Get appropriate move for player type
     switch (player_type) {
         case Human:
             move = getMoveHuman();
@@ -155,8 +160,7 @@ pair<int, int> Player::getMove(int symbol, int board[grid_size][grid_size]) {
             move = getMoveSmartAI(symbol, board);
             break;
         default:
-            move.first = -1;
-            move.second = -1;
+            cout << "Invalid player type" << endl;
     }
 
     return move;

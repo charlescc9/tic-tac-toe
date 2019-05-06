@@ -4,6 +4,8 @@
 #include <iostream>
 #include <random>
 
+using namespace std;
+
 // Constants
 const int grid_size = 3;
 const char SymbolString[] = {'-', 'X', 'O'};

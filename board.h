@@ -3,27 +3,23 @@
 
 #include "common.h"
 
-using namespace std;
-
 class Board {
-
-private:
-    // Methods
-    bool checkIfWinningBoard();
 
 public:
     // Constructor
     Board();
 
-    // Variable
+    // Variables
     int board[grid_size][grid_size];
     int active_player;
 
+    // Methods
     bool checkIfEmptySpace(int row, int col);
-    bool makeMove(int row, int col);
+    void makeMove(int row, int col);
+    bool checkIfWinningBoard();
     bool checkIfTieGame();
+    void switchActivePlayer();
     void displayBoard();
 };
-
 
 #endif //TICTACTOE_BOARD_H

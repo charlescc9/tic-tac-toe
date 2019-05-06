@@ -3,8 +3,6 @@
 
 #include "common.h"
 
-using namespace std;
-
 class Player {
 
 private:
@@ -27,6 +25,5 @@ public:
     // Method
     pair<int, int> getMove(int symbol, int board[grid_size][grid_size]);
 };
-
 
 #endif //TICTACTOE_PLAYER_H
